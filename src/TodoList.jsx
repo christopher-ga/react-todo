@@ -16,13 +16,11 @@ const todoList = [
 const TodoList = () => {
 
     return (
-        <>
             <ul>
                 {
                     todoList.map((el) => <li key={el.id}>{el.title}</li>)
                 }
             </ul>
-        </>
     )
 }
 

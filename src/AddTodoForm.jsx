@@ -2,9 +2,11 @@ const AddTodoForm = () => {
     return (
         <>
             <form action="">
-                <label id="todoTitle" title="Title"></label>
-                <input id="todoTitle"/>
-                <button>Add</button>
+                <label title="Title">
+                    <input id="todoTitle"/>
+                </label>
+
+                <button type="submit">Add</button>
             </form>
         </>
     )
