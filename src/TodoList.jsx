@@ -1,22 +1,6 @@
 import ToDoListItem from "./ToDoListItem.jsx";
 
-
-const todoList = [
-    {
-        id: 1,
-        title: 'Complete CTD Hawk assignment'
-    },
-    {
-        id: 2,
-        title: 'Call vet'
-    },
-    {
-        id: 3,
-        title: 'Cook family dinner'
-    }
-];
-
-const TodoList = () => {
+const TodoList = ({todoList}) => {
 
     return (
             <ul>
