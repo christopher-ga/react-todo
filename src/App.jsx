@@ -24,11 +24,15 @@ function App() {
         setTodoList(prevState => [...prevState, newToDo])
     }
 
+    const removeHandler = (id) => {
+        setTodoList(prev => prev.filter((e) => id !== e.id))
+    }
+
     return (
         <>
             <h1>Todo List</h1>
             <AddTodoForm onAddTodo={addToDo}></AddTodoForm>
-            <TodoList todoList = {todoList}></TodoList>
+            <TodoList onRemoveTodo = {removeHandler} todoList = {todoList}></TodoList>
         </>
     )
 }
