@@ -2,7 +2,8 @@ import './App.css'
 import TodoList from "./TodoList.jsx";
 import AddTodoForm from "./AddTodoForm.jsx";
 import {useEffect, useState} from "react";
-
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import style from "./TodoListItem.module.css"
 
 function App() {
 
@@ -66,9 +67,28 @@ function App() {
 
     return (
         <>
-            <h1>Todo List</h1>
-            <AddTodoForm onAddTodo={addToDo}></AddTodoForm>
-            {isLoading ? <p>Loading...</p> : <TodoList onRemoveTodo={removeHandler} todoList={todoList}></TodoList> }
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={
+                        <>
+                            <h1 className={style.headers}>Todo List</h1>
+                            <AddTodoForm onAddTodo={addToDo}></AddTodoForm>
+                            {isLoading ? <p>Loading...</p> :
+                                <TodoList onRemoveTodo={removeHandler} todoList={todoList}></TodoList>}
+                        </>
+
+                    }>
+                    </Route>
+
+                    <Route path="/new" element={
+                        <h1>New Todo List</h1>
+                    }>
+                    </Route>
+
+                </Routes>
+
+            </BrowserRouter>
+
         </>
     )
 }
