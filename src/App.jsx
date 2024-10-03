@@ -18,7 +18,6 @@ function App() {
             }
         };
 
-        console.log(import.meta.env.VITE_AIRTABLE_API_TOKEN)
 
         const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
 
@@ -31,7 +30,20 @@ function App() {
 
             const data = await response.json();
 
-            const todos = data.records.map(record => ({
+            const sortedRecords = data.records.sort((a, b) => {
+                const titleA = a.fields.title.toUpperCase();
+                const titleB = b.fields.title.toUpperCase();
+
+                if (titleA < titleB) {
+                    return -1;
+                }
+                if (titleA > titleB) {
+                    return 1;
+                }
+                return 0;
+            });
+
+            const todos = sortedRecords.map(record => ({
                 title: record.fields.title,
                 id: record.id
             }));
