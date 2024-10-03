@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+
+.ListItem {
+    color: green;
+    margin-top: 100px;
+}
+
+body {
+    background-color: #d4eac7;
+    color: green;
+    font-family: "Pacifico", cursive;
+}
+
+.headers {
+    font-size: 50px;
+}
+
+.button {
+    background-color: #1f6c19;
+    color: white;
+    font-family: 'Pacifico', cursive;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+@media (max-width: 600px) {
+    body {
+        background-color: #f1d8b9;
+    }
+
+    .headers {
+        font-size: 30px;
+    }
+
+    .button {
+        font-size: 14px;
+    }
+}

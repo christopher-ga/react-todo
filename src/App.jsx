@@ -1,8 +1,9 @@
-import './App.css'
-import TodoList from "./TodoList.jsx";
-import AddTodoForm from "./AddTodoForm.jsx";
+import './components/App.css'
+import TodoList from "./components/TodoList.jsx";
+import AddTodoForm from "./components/AddTodoForm.jsx";
 import {useEffect, useState} from "react";
-
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import style from "./components/TodoListItem.module.css"
 
 function App() {
 
@@ -17,7 +18,6 @@ function App() {
             }
         };
 
-        console.log(import.meta.env.VITE_AIRTABLE_API_TOKEN)
 
         const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
 
@@ -30,7 +30,20 @@ function App() {
 
             const data = await response.json();
 
-            const todos = data.records.map(record => ({
+            const sortedRecords = data.records.sort((a, b) => {
+                const titleA = a.fields.title.toUpperCase();
+                const titleB = b.fields.title.toUpperCase();
+
+                if (titleA < titleB) {
+                    return -1;
+                }
+                if (titleA > titleB) {
+                    return 1;
+                }
+                return 0;
+            });
+
+            const todos = sortedRecords.map(record => ({
                 title: record.fields.title,
                 id: record.id
             }));
@@ -66,9 +79,28 @@ function App() {
 
     return (
         <>
-            <h1>Todo List</h1>
-            <AddTodoForm onAddTodo={addToDo}></AddTodoForm>
-            {isLoading ? <p>Loading...</p> : <TodoList onRemoveTodo={removeHandler} todoList={todoList}></TodoList> }
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={
+                        <>
+                            <h1 className={style.headers}>Todo List</h1>
+                            <AddTodoForm onAddTodo={addToDo}></AddTodoForm>
+                            {isLoading ? <p>Loading...</p> :
+                                <TodoList onRemoveTodo={removeHandler} todoList={todoList}></TodoList>}
+                        </>
+
+                    }>
+                    </Route>
+
+                    <Route path="/new" element={
+                        <h1>New Todo List</h1>
+                    }>
+                    </Route>
+
+                </Routes>
+
+            </BrowserRouter>
+
         </>
     )
 }
