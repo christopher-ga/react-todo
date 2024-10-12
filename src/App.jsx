@@ -9,6 +9,7 @@ function App() {
 
     const [todoList, setTodoList] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    console.log(import.meta.env.VITE_AIRTABLE_API_TOKEN)
 
     const fetchData = async () => {
         const options = {
@@ -19,7 +20,7 @@ function App() {
         };
 
 
-        const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
+        const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}?view=view&sort[0][field]=title&sort[0][direction]=asc`;
 
         try {
             const response = await fetch(url, options);
@@ -47,6 +48,8 @@ function App() {
                 title: record.fields.title,
                 id: record.id
             }));
+
+
 
             setTodoList(todos);
             setLoading(false);
