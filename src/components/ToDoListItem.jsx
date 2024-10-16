@@ -1,13 +1,16 @@
-import style from "./TodoListItem.module.css"
 import PropTypes from "prop-types";
 const ToDoListItem = ({listItem, onRemoveTodo, id}) => {
     return (
         <>
-            <li className={style.ListItem}>{listItem}</li>
-            <button className={style.button} onClick={() => onRemoveTodo(id)}>Remove</button>
+                <div className="card-wrapper">
+                    <section className="content">
+                        <p>{listItem}</p>
+                    </section>
+                    <section onClick={(e) => onRemoveTodo(e, id)} className="icons">
+                        <img  src="/trash.png" alt=""/>
+                    </section>
+                </div>
         </>
-
-
     )
 }
 

@@ -12,9 +12,9 @@ const InputWithLabel = ({ value, handleChange, children, id}) => {
 
     return (
         <label>
-            {children}
             <input
                 ref={inputRef}
+                className="modal-input"
                 value={value}
                 onChange={handleChange}
                 id={id}
