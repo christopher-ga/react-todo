@@ -1,10 +1,8 @@
-import style from "../stylesheets/listWrapper.module.css"
-
 const ToDoListWrapper = ({children}) => {
 
     return (
         <>
-            <section className={style.wrapper} >
+            <section>
                 {children}
             </section>
         </>

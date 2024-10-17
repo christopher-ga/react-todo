@@ -1,6 +1,7 @@
 import {useState} from "react";
 import InputWithLabel from "./InputWithLabel.jsx";
 import PropTypes from "prop-types";
+import style from "../stylesheets/modal.module.css"
 
 const AddTodoForm = ({onAddTodo}) => {
     const [todoTitle, setTodoTitle] = useState("")
@@ -17,9 +18,9 @@ const AddTodoForm = ({onAddTodo}) => {
 
     return (
         <>
-            <form className="modal-form" onSubmit={handleAddTodo}>
+            <form className={style["modal-form"]} onSubmit={handleAddTodo}>
                 <InputWithLabel id="todoTitle" value={todoTitle} handleChange={handleTitleChange}> </InputWithLabel>
-                <button className="modal-button" type="submit">Add</button>
+                <button className={style["modal-button"]}  type="submit">Add</button>
             </form>
         </>
     )

@@ -1,16 +1,16 @@
-import HomePageComponent from "./components/HomePageComponent.jsx";
-import ListPageComponent from "./components/ListPageComponent.jsx";
+import ListsPageComponent from "./components/pages/ListsPageComponent.jsx";
+import TodoListPageComponent from "./components/pages/TodoListPageComponent.jsx";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import AirTableList from "./components/AirtableList.jsx";
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <HomePageComponent />,
+        element: <ListsPageComponent />,
     },
     {
         path: '/lists/:listId',
-        element: <ListPageComponent />,
+        element: <TodoListPageComponent />,
     },
     {
         path: '/airtable',

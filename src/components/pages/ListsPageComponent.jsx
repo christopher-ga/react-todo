@@ -1,17 +1,17 @@
-import './App.css'
+import '../App.css'
 import {useEffect, useState} from "react";
-import AddListForm from "./AddListForm.jsx";
-import CurrentLists from "./CurrentLists.jsx";
+import AddListForm from "../AddListForm.jsx";
+import CurrentLists from "../CurrentLists.jsx";
 import {useNavigate} from "react-router-dom";
+import ModalWrapper from "../ModalWrapper.jsx";
 
-function HomePageComponent() {
+function ListsPageComponent() {
     const navigate = useNavigate();
 
     const [isModalOpen, setModalOpen] = useState(false)
 
     const [isLoading, setLoading] = useState(true);
     const [lists, setLists] = useState([]);
-
 
     const generateId = () => Math.floor(Math.random() * 1000 + 1);
 
@@ -45,9 +45,6 @@ function HomePageComponent() {
     }
 
     const handleClickList = (id) => {
-
-        console.log(id);
-
         if (id === "airtable") {
             navigate(`/airtable`)
         } else {
@@ -57,32 +54,23 @@ function HomePageComponent() {
     }
 
     useEffect(() => {
-
         const storedLists = localStorage.getItem('savedList');
-
-
         if (storedLists) {
             const parsedLists = Object.values(JSON.parse(storedLists));
             setLists(parsedLists)
         }
 
         setLoading(false);
-
-
     }, [])
 
     useEffect(() => {
-
         if (!isLoading) {
             const listStorage = {};
-
             lists.forEach((e) => {
                 listStorage[e.id] = e;
             })
-
             localStorage.setItem('savedList', JSON.stringify(listStorage));
         }
-
     }, [lists]);
 
 
@@ -107,16 +95,12 @@ function HomePageComponent() {
                 </section>
             </div>
 
-            {isModalOpen && (<div className="modal-overlay" onClick={handleModal}>
-                <section onClick={(e) => {
-                    e.stopPropagation()
-                }} className="modal-content">
-                    <h2 id="modal-heading" className="visually-hidden">Enter List Name</h2>
-                    <AddListForm onAddList={addList}></AddListForm>
-                </section>
-            </div>)}
+            {isModalOpen && <ModalWrapper handleModal={handleModal} modalHeader="Enter List Name">
+                <AddListForm onAddList={addList}></AddListForm>
+            </ModalWrapper>
+            }
         </>
     )
 }
 
-export default HomePageComponent
+export default ListsPageComponent

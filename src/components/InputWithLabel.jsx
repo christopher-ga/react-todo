@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from "prop-types";
+import style from "../stylesheets/modal.module.css"
 
-const InputWithLabel = ({ value, handleChange, children, id}) => {
+const InputWithLabel = ({ value, handleChange, id}) => {
     const inputRef = useRef(null);
 
     useEffect(() => {
@@ -14,7 +15,7 @@ const InputWithLabel = ({ value, handleChange, children, id}) => {
         <label>
             <input
                 ref={inputRef}
-                className="modal-input"
+                className={style["modal-input"]}
                 value={value}
                 onChange={handleChange}
                 id={id}
@@ -26,7 +27,6 @@ const InputWithLabel = ({ value, handleChange, children, id}) => {
 InputWithLabel.propTypes = {
     value: PropTypes.string.isRequired,
     handleChange: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired,
     id: PropTypes.string.isRequired,
 };
 

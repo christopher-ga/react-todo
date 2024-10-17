@@ -2,6 +2,8 @@ import TodoList from "./TodoList.jsx";
 import AddTodoForm from "./AddTodoForm.jsx";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import ModalWrapper from "./ModalWrapper.jsx";
+import AddListForm from "./AddListForm.jsx";
 
 const AirTableList = () => {
 
@@ -147,23 +149,16 @@ const AirTableList = () => {
                 </nav>
 
                 <section className="wrapper">
-
                     {isLoading ? (<p>Loading...</p>) : (<section className="list-item-wrapper">
                         <TodoList onRemoveTodo={removeHandler} todoList={todoList}></TodoList>
                     </section>)}
-
-
                 </section>
             </div>
 
-            {isModalOpen && (<div className="modal-overlay" onClick={handleModal}>
-                <section onClick={(e) => {
-                    e.stopPropagation()
-                }} className="modal-content">
-                    <h2 id="modal-heading" className="visually-hidden">Enter Task</h2>
-                    <AddTodoForm onAddTodo={addToDo}></AddTodoForm>
-                </section>
-            </div>)}
+            {isModalOpen && <ModalWrapper handleModal={handleModal} modalHeader="Enter Task">
+                <AddTodoForm onAddTodo={addToDo}></AddTodoForm>
+            </ModalWrapper>
+            }
         </>
     )
 }
