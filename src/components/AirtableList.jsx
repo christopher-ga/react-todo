@@ -133,7 +133,7 @@ const AirTableList = () => {
         <>
             <div className="container">
                 <div className="header-container">
-                    <h1>TO DO LIST</h1>
+                    <h1>Air Table List</h1>
                 </div>
 
                 <nav className="nav-wrapper">

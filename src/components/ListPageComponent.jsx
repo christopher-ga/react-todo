@@ -7,7 +7,9 @@ const ListPageComponent = () => {
 
     const navigate = useNavigate();
 
+
     let {listId} = useParams();
+    const listTitle = JSON.parse(localStorage.getItem("savedList"))[listId].title
 
     const [isModalOpen, setModalOpen] = useState(false)
 
@@ -17,28 +19,18 @@ const ListPageComponent = () => {
 
 
     useEffect(() => {
-
         if (!isLoading) {
-
             const lists = JSON.parse(localStorage.getItem("savedList"));
-            console.log("all lists", lists);
-            console.log('this list', lists[listId])
-
             lists[listId]["todos"] = todoList
-
             localStorage.setItem("savedList", JSON.stringify(lists));
-
         }
     }, [todoList]);
 
 
-    //load in list items
     useEffect(() => {
         const listItems = JSON.parse(localStorage.getItem("savedList"))
-
         setTodoList(listItems[listId]["todos"])
         setLoading(false);
-
     }, [])
 
     const addToDo = (newToDo) => {
@@ -62,7 +54,7 @@ const ListPageComponent = () => {
         <>
             <div className="container">
                 <div className="header-container">
-                    <h1>TO DO LIST</h1>
+                    <h1>{listTitle}</h1>
                 </div>
 
                 <nav className="nav-wrapper">
