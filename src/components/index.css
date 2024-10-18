@@ -35,10 +35,11 @@ html {
     min-height: 150px;
 }
 
-
 .header-container {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .nav-wrapper {
@@ -78,6 +79,21 @@ html {
     justify-content: space-between;
     align-items: center;
     height: 60px;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    gap: 20px
+}
+
+.checkbox {
+    width: 30px;
+    height: 30px;
+}
+
+.strike {
+    text-decoration: line-through;
 }
 
 .icons {

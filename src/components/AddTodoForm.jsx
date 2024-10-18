@@ -12,7 +12,7 @@ const AddTodoForm = ({onAddTodo}) => {
     }
     const handleAddTodo = (e) => {
         e.preventDefault();
-        onAddTodo({title: todoTitle, id: Date.now()});
+        onAddTodo({title: todoTitle, id: Date.now(), checked: false});
         setTodoTitle("")
     }
 

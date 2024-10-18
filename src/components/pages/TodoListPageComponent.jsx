@@ -9,12 +9,16 @@ const TodoListPageComponent = () => {
 
     const socketRef = useRef(null);
     const navigate = useNavigate();
+
     let {listId} = useParams();
 
-    const listTitle = JSON.parse(localStorage.getItem("savedList"))[listId].title
     const [isModalOpen, setModalOpen] = useState(false)
     const [todoList, setTodoList] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    const [connectedSockets, setConnectedSockets] = useState([])
+
+
+    const listTitle = JSON.parse(localStorage.getItem("savedList"))[listId].title
 
 
     useEffect(() => {
@@ -28,7 +32,9 @@ const TodoListPageComponent = () => {
 
     useEffect(() => {
         const listItems = JSON.parse(localStorage.getItem("savedList"))
+        console.log(listItems);
         setTodoList(listItems[listId]["todos"])
+
         setLoading(false);
     }, [])
 
@@ -36,11 +42,9 @@ const TodoListPageComponent = () => {
     useEffect(() => {
         const todoItems = JSON.parse(localStorage.getItem("savedList"))[listId]["todos"]
 
-
         socketRef.current = io("http://localhost:8080");
 
         socketRef.current.on("connect", () => {
-            console.log(socketRef.current.id);
             socketRef.current.emit("joinList", {id: listId, todos: todoItems, title: listTitle })
         })
 
@@ -48,8 +52,11 @@ const TodoListPageComponent = () => {
             setTodoList(data["todos"])
         })
 
+        socketRef.current.on("new-socket", (id) => {
+            setConnectedSockets((prev) => [...prev, id]);
+        })
+
         return () => {
-            console.log("Disconnecting socket...");
             socketRef.current.emit("leave-room", listId);
             socketRef.current.disconnect();
         };
@@ -71,14 +78,11 @@ const TodoListPageComponent = () => {
 
     const removeHandler = (e, id) => {
         e.stopPropagation()
-        console.log('removing');
 
         setTodoList(prevState => {
             const updatedList = prevState.filter((e) => id !== e.id);
 
-
             socketRef.current.emit("remove-todo", listId, id);
-
             return updatedList;
         });
     }
@@ -91,6 +95,19 @@ const TodoListPageComponent = () => {
         navigate("/");
     }
 
+    const handleUpdate = (id) => {
+        const updatedTodoList = todoList.map((e) => {
+            if (e.id === id) {
+                return { ...e, checked: !e.checked };
+            }
+            return e;
+        });
+
+        socketRef.current.emit("check-todo", listId, updatedTodoList)
+        console.log('emit update');
+        setTodoList(updatedTodoList);
+
+    };
     return (
         <>
             <div className="container">
@@ -110,7 +127,7 @@ const TodoListPageComponent = () => {
 
                 <section className="wrapper">
                     {isLoading ? (<p>Loading...</p>) : (<section className="list-item-wrapper">
-                        <TodoList onRemoveTodo={removeHandler} todoList={todoList}></TodoList>
+                        <TodoList  update={handleUpdate}  onRemoveTodo={removeHandler} todoList={todoList}></TodoList>
                     </section>)}
                 </section>
             </div>

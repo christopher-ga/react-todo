@@ -35,8 +35,6 @@ function ListsPageComponent() {
 
     const removeHandler = (e, id) => {
         e.stopPropagation();
-
-
         setLists(prev => prev.filter((e) => id !== e.id))
     }
 

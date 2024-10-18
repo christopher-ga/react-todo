@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 
 import ToDoListItem from "./ToDoListItem.jsx";
 
-const TodoList = ({todoList, onRemoveTodo}) => {
+const TodoList = ({todoList, onRemoveTodo, update, emitCheckedTask}) => {
     return (
         <>
-            {todoList.map((el) => <ToDoListItem onRemoveTodo={onRemoveTodo} key={el.id} id={el.id} listItem={el.title}></ToDoListItem> )}
+            {todoList.map((el) => <ToDoListItem emitCheckedTask={update} checked={el.checked} update={update} onRemoveTodo={onRemoveTodo} key={el.id} id={el.id} listItem={el.title}></ToDoListItem> )}
         </>
     )
 }
