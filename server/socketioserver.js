@@ -19,12 +19,12 @@ io.on("connection", (socket) => {
             }
         }
 
-        socket.emit("set-data", listStorage[listData.id])
+        socket.emit("set-data", listStorage[listData.id]);
+        socket.emit('new-socket', socket.id);
     })
 
     socket.on('add-todo', (listData) => {
 
-        console.log('meow');
         listStorage[listData.id] = {
             ...listData
         }
@@ -35,9 +35,16 @@ io.on("connection", (socket) => {
     socket.on("remove-todo", (listId, todoId) => {
 
         let todosArray = listStorage[listId].todos
-
         listStorage[listId].todos = todosArray.filter((e) => todoId !== e.id)
+        socket.to(listId).emit("set-data",  listStorage[listId] )
 
+    })
+
+    socket.on('check-todo', (listId, updatedTodos) => {
+
+        listStorage[listId].todos = updatedTodos;
+        console.log(listStorage[listId]);
+        socket.to(listId).emit("set-data", listStorage[listId]);
     })
 
     socket.on("leave-room", (listId) => {
