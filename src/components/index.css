@@ -1,12 +1,17 @@
 * {
     box-sizing: border-box;
     margin: 0;
+    font-family: Moranga-regular;
 }
 
 html {
     background-color: rgba(249, 255, 248, 0.69);
 }
 
+@font-face {
+    font-family: "Moranga-regular";
+    src: url("../../public/moranga-regular.otf") format("opentype")
+}
 
 .container {
     display: flex;
@@ -87,68 +92,3 @@ html {
     cursor: pointer;
 }
 
-
-/*.modal-overlay {*/
-/*    height: 100vh;*/
-/*    background: rgba(152, 152, 152, 0.7);*/
-/*    backdrop-filter: blur(5px);*/
-/*    -webkit-backdrop-filter: blur(2px);*/
-/*    position: fixed;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    right: 0;*/
-/*    bottom: 0;*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    flex-direction: column;*/
-/*}*/
-
-/*.modal-content {*/
-/*    background: white;*/
-/*    margin: auto;*/
-/*    padding: 20px 30px;*/
-/*    border-radius: 8px;*/
-/*    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);*/
-/*    width: 90%;*/
-/*    max-width: 500px;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    gap: 15px;*/
-/*    animation: fadeIn 0.3s ease-out;*/
-/*}*/
-
-/*.modal-form {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    gap: 20px*/
-/*}*/
-
-
-/*.modal-input {*/
-/*    width: 100%;*/
-/*    padding: 10px 15px;*/
-/*    border: 1px solid #ccc;*/
-/*    border-radius: 4px;*/
-/*    font-size: 16px;*/
-/*}*/
-
-
-/*.modal-button {*/
-/*    padding: 10px 15px;*/
-/*    background-color: #a3c4b1;*/
-/*    color: white;*/
-/*    border: none;*/
-/*    border-radius: 4px;*/
-/*    font-size: 16px;*/
-/*    cursor: pointer;*/
-/*    transition: background-color 0.2s ease-in-out;*/
-/*}*/
-
-/*.modal-button:hover {*/
-/*    background-color: #34a955;*/
-/*}*/
-
-/*@keyframes fadeIn {*/
-/*    from { opacity: 0; transform: scale(0.9); }*/
-/*    to { opacity: 1; transform: scale(1); }*/
-/*}*/

@@ -42,7 +42,7 @@ io.on("connection", (socket) => {
 
     socket.on("leave-room", (listId) => {
 
-        const listSize = io.sockets.adapter.rooms.get(listId)?.size - 1 || 0; // Number
+        const listSize = io.sockets.adapter.rooms.get(listId)?.size - 1 || 0;
 
         if (listSize === 0) {
             delete listStorage[listId]
