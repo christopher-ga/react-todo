@@ -1,16 +1,16 @@
 import TodoList from "../TodoList.jsx";
 import AddTodoForm from "../AddTodoForm.jsx";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import ModalWrapper from "../ModalWrapper.jsx";
-import AddListForm from "../AddListForm.jsx";
+import { io } from "socket.io-client";
 
 const TodoListPageComponent = () => {
 
+    const socketRef = useRef(null);
     const navigate = useNavigate();
-
-
     let {listId} = useParams();
+
     const listTitle = JSON.parse(localStorage.getItem("savedList"))[listId].title
     const [isModalOpen, setModalOpen] = useState(false)
     const [todoList, setTodoList] = useState([]);
@@ -32,14 +32,55 @@ const TodoListPageComponent = () => {
         setLoading(false);
     }, [])
 
+
+    useEffect(() => {
+        const todoItems = JSON.parse(localStorage.getItem("savedList"))[listId]["todos"]
+
+
+        socketRef.current = io("http://localhost:8080");
+
+        socketRef.current.on("connect", () => {
+            console.log(socketRef.current.id);
+            socketRef.current.emit("joinList", {id: listId, todos: todoItems, title: listTitle })
+        })
+
+        socketRef.current.on("set-data", (data) => {
+            setTodoList(data["todos"])
+        })
+
+        return () => {
+            console.log("Disconnecting socket...");
+            socketRef.current.emit("leave-room", listId);
+            socketRef.current.disconnect();
+        };
+
+    }, []);
+
+
     const addToDo = (newToDo) => {
-        setTodoList(prevState => [...prevState, newToDo])
+
+        setTodoList(prevState => {
+            const updatedList = [...prevState, newToDo];
+
+            socketRef.current.emit('add-todo', { id: listId, todos: updatedList, title: listTitle });
+
+            return updatedList;
+        });
         setModalOpen(false);
     }
 
     const removeHandler = (e, id) => {
         e.stopPropagation()
-        setTodoList(prev => prev.filter((e) => id !== e.id))
+        console.log('removing');
+
+        setTodoList(prevState => {
+            const updatedList = prevState.filter((e) => id !== e.id);
+
+
+            socketRef.current.emit("remove-todo", listId, id);
+
+            return updatedList;
+        });
     }
 
     const handleModal = () => {
@@ -49,6 +90,7 @@ const TodoListPageComponent = () => {
     const handleNavigateHome = () => {
         navigate("/");
     }
+
     return (
         <>
             <div className="container">
